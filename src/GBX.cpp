@@ -193,13 +193,13 @@ void Entity::moveBy(int16_t dx, int16_t dy, const uint8_t collideTypeIds[])
     int16_t dist = dx * sign;
     while (dist > 0)
     {
-      Entity* other = query(x + dx, y, collideTypeIds);
+      Entity* other = query(x + sign, y, collideTypeIds);
       if (other != NULL && onMoveCollideX(*other))
       {
         break;
       }
       dist--;
-      x += dx;
+      x += sign;
     }
   }
 
@@ -209,13 +209,13 @@ void Entity::moveBy(int16_t dx, int16_t dy, const uint8_t collideTypeIds[])
     int16_t dist = dy * sign;
     while (dist > 0)
     {
-      Entity* other = query(x, y + dy, collideTypeIds);
+      Entity* other = query(x, y + sign, collideTypeIds);
       if (other != NULL && onMoveCollideY(*other))
       {
         break;
       }
       dist--;
-      y += dy;
+      y += sign;
     }
   }
 }
