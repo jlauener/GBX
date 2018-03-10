@@ -225,6 +225,26 @@ public:
   void moveBy(int16_t dx, int16_t dy, const uint8_t collideTypeIds[] = NULL);
   void moveTo(int16_t x, int16_t y, const uint8_t collideTypeIds[] = NULL);
 
+  inline int16_t left()
+  {
+    return x + hitboxX;
+  }
+
+  inline int16_t right()
+  {
+    return left() + hitboxWidth;
+  }
+
+  inline int16_t top()
+  {
+    return y + hitboxY;
+  }
+
+  inline int16_t bottom()
+  {
+    return top() + hitboxHeight;
+  }
+
   int16_t x = 0;
   int16_t y = 0;
 
