@@ -15,9 +15,10 @@ namespace // unamed
 const int16_t gbx::width = gb.display.width();
 const int16_t gbx::height = gb.display.height();
 
-void gbx::init()
+void gbx::init(uint8_t frameRate)
 {
   gb.begin();
+  gb.setFrameRate(frameRate);
 }
 
 void gbx::update()

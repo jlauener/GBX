@@ -13,6 +13,8 @@
 // (c) 2018 Joel "ZappedCow" Lauener
 //
 
+#define DEFAULT_FRAME_RATE 30
+
 #define TYPES_INITIAL_CAPACITY 5
 #define LAYERS_INITIAL_CAPACITY 5
 #define RENDERABLES_BY_LAYER_INITIAL_CAPACITY 5
@@ -592,7 +594,7 @@ private:
 
 namespace gbx
 {
-  void init();
+  void init(uint8_t frameRate = DEFAULT_FRAME_RATE);
   void update();
 
   // scene
