@@ -638,6 +638,10 @@ namespace gbx
   void drawCircle(int16_t x, int16_t y, int16_t r, Color c = Color::white);
   void fillCircle(int16_t x, int16_t y, int16_t r, Color c = Color::white);
 
+  void drawChar(int16_t x, int16_t y, char chr, Color c = Color::white, Gamebuino_Meta::GFXfont* font = NULL);
+  void drawString(int16_t x, int16_t y, const char* str, Color c = Color::white, Gamebuino_Meta::GFXfont* font = NULL);
+  const char* format(const char* format...);
+
   // input
   bool isDown(Gamebuino_Meta::Button button);
   bool wasPressed(Gamebuino_Meta::Button button);

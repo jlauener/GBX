@@ -1,5 +1,7 @@
 #include "GBX.h"
 
+#include <cstdarg>
+
 //-----------------------------------------------------------------------------
 // Core
 //-----------------------------------------------------------------------------
@@ -43,16 +45,9 @@ void gbx::update()
       scene->drawDebug();
     }
 
-#ifndef GBMSDL // TODO support print in GBMSDL
-    gb.display.setCursor(0, 0);
-    gb.display.setColor(Color::white);
-    gb.display.print("cpu=");
-    gb.display.println(gb.getCpuLoad());
-    gb.display.print("ram=");
-    gb.display.println(gb.getFreeRam());
-    gb.display.print("cnt=");
-    gb.display.println(entityCount);
-#endif
+    drawString(0, 0, format("cpu=%d", gb.getCpuLoad()));
+    drawString(0, 6, format("ram=%d", gb.getFreeRam()));
+    drawString(0, 12, format("cnt=%d", entityCount));
   }
 }
 
@@ -124,6 +119,39 @@ void gbx::fillCircle(int16_t x, int16_t y, int16_t r, Color c)
 {
   gb.display.setColor(c);
   gb.display.fillCircle(x, y, r);
+}
+
+void gbx::drawChar(int16_t x, int16_t y, char chr, Color c, Gamebuino_Meta::GFXfont* font)
+{
+  gb.display.setFont(font);
+  gb.display.setColor(c);
+  gb.display.setCursor(x, y);
+  gb.display.write(chr);
+}
+
+void gbx::drawString(int16_t x, int16_t y, const char* str, Color c, Gamebuino_Meta::GFXfont* font)
+{
+  gb.display.setFont(font);
+  gb.display.setColor(c);
+  gb.display.setCursor(x, y);
+  for (size_t i = 0; i < std::strlen(str); i++)
+  {
+    gb.display.write(str[i]);
+  }
+}
+
+namespace
+{
+  char formatBuffer[128];
+}
+
+const char* gbx::format(const char* format...)
+{
+  va_list ap;
+  va_start(ap, format);
+  vsnprintf(formatBuffer, sizeof(formatBuffer), format, ap);
+  va_end(ap);
+  return formatBuffer;
 }
 
 bool gbx::isDown(Gamebuino_Meta::Button button)
