@@ -178,12 +178,14 @@ void Entity::_init(int16_t x, int16_t y)
   this->x = x;
   this->y = y;
   flags = _FLAG_ACTIVE | FLAG_COLLIDABLE | FLAG_VISIBLE;
+  entityCount++;
   onInit();
 }
 
 void Entity::remove()
 {
   _pool->remove(this);
+  entityCount--;
 }
 
 uint8_t Entity::getType()
