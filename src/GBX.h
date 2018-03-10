@@ -499,6 +499,7 @@ public:
   }
 
   uint16_t frame = 0;
+  bool flip = false;
 
 protected:
   const uint16_t* buffer = NULL;
@@ -538,6 +539,16 @@ public:
   inline uint16_t getHeight() const
   {
     return sprite.getHeight();
+  }
+
+  inline bool isFlipped()
+  {
+    return sprite.flip;
+  }
+
+  inline void setFlipped(bool flipped)
+  {
+    sprite.flip = flipped;
   }
 
   uint8_t frameOffset = 0;

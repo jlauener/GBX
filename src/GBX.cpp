@@ -435,16 +435,28 @@ void Sprite::draw(int16_t x, int16_t y)
   }
 
   // calculate source and dest pointers initial address
-  const uint16_t* sourcePtr = buffer + (yOffset * width) + xOffset;
+  const uint16_t* sourcePtr = buffer + (yOffset * width);
+  
+  if (flip)
+  {
+    sourcePtr += width - xOffset;
+  }
+  else
+  {
+    sourcePtr += xOffset;
+  }
+
   if (frame > 0)
   {
     sourcePtr += frame * width * height;
   }
+  
   uint16_t* destPtr = gb.display._buffer + (y + yOffset) * gb.display.width() + x + xOffset;
 
-  if (!transparentColor)
+  // rendering code
+  if (!flip && !transparentColor)
   {
-    // no transparent color, use memcpy
+    // no flip, no transparent color, use memcpy
     for (uint8_t iy = 0; iy < renderHeight; iy++)
     {
       memcpy(destPtr, sourcePtr, renderWidth * 2);
@@ -452,9 +464,9 @@ void Sprite::draw(int16_t x, int16_t y)
       destPtr += gb.display.width();
     }
   }
-  else
+  else if(!flip)
   {
-    // transparent color, copy pixel by pixel
+    // no flip, transparent color, copy pixel by pixel
     for (uint8_t iy = 0; iy < renderHeight; iy++)
     {
       for (uint8_t ix = 0; ix < renderWidth; ix++)
@@ -467,6 +479,24 @@ void Sprite::draw(int16_t x, int16_t y)
         destPtr++;
       }
       sourcePtr += width - renderWidth;
+      destPtr += gb.display.width() - renderWidth;
+    }
+  }
+  else
+  {
+    // flip, copy pixel by pixel
+    for (uint8_t iy = 0; iy < renderHeight; iy++)
+    {
+      for (uint8_t ix = 0; ix < renderWidth; ix++)
+      {
+        if (!transparentColor || *sourcePtr != transparentColor)
+        {
+          *destPtr = *sourcePtr;
+        }
+        sourcePtr--;
+        destPtr++;
+      }
+      sourcePtr += width + renderWidth;
       destPtr += gb.display.width() - renderWidth;
     }
   }
