@@ -134,7 +134,7 @@ void gbx::drawString(int16_t x, int16_t y, const char* str, Color c, Gamebuino_M
   gb.display.setFont(font);
   gb.display.setColor(c);
   gb.display.setCursor(x, y);
-  for (size_t i = 0; i < std::strlen(str); i++)
+  for (size_t i = 0; i < strlen(str); i++)
   {
     gb.display.write(str[i]);
   }
