@@ -439,7 +439,7 @@ void Sprite::draw(int16_t x, int16_t y)
   
   if (flip)
   {
-    sourcePtr += width - xOffset;
+    sourcePtr += width - xOffset - 1;
   }
   else
   {
@@ -520,6 +520,9 @@ void Anim::draw(int16_t x, int16_t y)
     return;
   }
 
+  sprite.frame = currentAnim[3 + currentFrameIndex] + frameOffset;
+  sprite.draw(x + this->originX, y + this->originY);
+
   uint8_t interval = currentAnim[2];
   if (interval > 0)
   {
@@ -534,16 +537,12 @@ void Anim::draw(int16_t x, int16_t y)
         else // currentAnim[1] == ONE_SHOT
         {
           currentAnim = NULL;
-          return;
         }
 
       }
       counter = 0;
     }
   }
-
-  sprite.frame = currentAnim[3 + currentFrameIndex] + frameOffset;
-  sprite.draw(x + this->originX, y + this->originY);
 }
 
 void Anim::play(uint8_t anim)

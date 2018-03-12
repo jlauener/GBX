@@ -551,6 +551,16 @@ public:
     sprite.flip = flipped;
   }
 
+  inline bool isPlaying()
+  {
+    return currentAnim != NULL;
+  }
+
+  inline uint8_t getCurrentFrameIndex()
+  {
+    return currentFrameIndex;
+  }
+
   uint8_t frameOffset = 0;
 
 private:
